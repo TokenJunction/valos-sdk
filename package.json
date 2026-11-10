@@ -1,0 +1,19 @@
+{
+  "name": "valos-sdk",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Public ValhallaOS SDK, setup scripts, and docs. Pre-1.0. No package is published from this repository yet.",
+  "type": "module",
+  "scripts": {
+    "test": "node --test",
+    "leak-guard": "node scripts/leak-guard.mjs",
+    "license-notices": "node scripts/license-notice-check.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TokenJunction/valos-sdk.git"
+  }
+}
