@@ -1,0 +1,33 @@
+# Copyright (c) 2026 TokenJunction LLC. All rights reserved.
+name: SDK TypeScript checks
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - 'type-tests/**'
+      - '.github/workflows/sdk-types.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - 'type-tests/**'
+      - '.github/workflows/sdk-types.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  typecheck:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22'
+      - name: Check public API types and negative cases
+        run: npm exec --yes --package=typescript@5.9.3 -- tsc --strict --noEmit --module NodeNext --moduleResolution NodeNext --target ES2022 type-tests/public-api.ts
