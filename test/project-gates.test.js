@@ -68,6 +68,11 @@ describe("project gates", () => {
     assert.match(workflow, /npm run lint/);
     assert.match(workflow, /npm run build/);
     assert.match(workflow, /SOURCE_DATE_EPOCH: "315532800"/);
+    const runners = [...workflow.matchAll(/^\s*runs-on:\s*["']?([^"'\s]+)["']?\s*$/gm)].map(
+      (match) => match[1],
+    );
+    assert.deepEqual(runners, ["ubuntu-24.04", "ubuntu-24.04", "ubuntu-24.04"]);
+    assert.equal(workflow.includes("ubuntu-latest"), false);
   });
 
   it("puts the copyright header on every JavaScript source file", () => {
