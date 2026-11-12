@@ -12,8 +12,44 @@ Every pull request must pass all of the following before it can be merged. Conti
 - `npm test` — the Node.js test suite, including the coverage gate. Statement coverage must be at least 90%. Branch, line, and function coverage must each be at least 80%. The run fails below those thresholds.
 - `npm run lint` — ESLint with `--max-warnings=0`. Any warning or error fails the build.
 - `npm run build` — the reproducible build. It packs the package twice with `SOURCE_DATE_EPOCH` set and fails if the SHA-256 hashes differ or if the tarball contains a sourcemap.
+- `dco` — every commit carries a `Signed-off-by` line that matches its author's email address. See [Developer Certificate of Origin](#developer-certificate-of-origin).
 
 Install dependencies with `npm ci` (Node.js 22.23.4, npm 10.9.9). Do not rely on a floating `npm install` for review or CI.
+
+## Developer Certificate of Origin
+
+Every commit in a pull request must carry a `Signed-off-by` line naming the commit author. The `dco` workflow checks every non-merge commit between the pull request base and head, and fails when one is missing or names a different address. A pull request with an unsigned commit cannot be merged.
+
+Sign off on the commit you just made:
+
+```bash
+git commit --amend -s
+```
+
+Sign off on every commit already on your branch, then update the pull request:
+
+```bash
+git rebase --signoff main
+git push --force-with-lease
+```
+
+To stop having to remember, sign everything in this repository automatically:
+
+```bash
+git config --local format.signoff true
+```
+
+The trailer takes the form:
+
+```
+Signed-off-by: Your Name <you@example.com>
+```
+
+The address must match `user.email`, which should be an address verified on your GitHub account. A rebase rewrites the committer while keeping the original author, and `--signoff` uses the committer, so the check accepts a sign-off naming either the author or whoever committed it. That is what makes it possible to sign off commits that were created through the GitHub API.
+
+By adding the line you certify the [Developer Certificate of Origin 1.1](https://developercertificate.org/): that you wrote the change or have the right to submit it under the project's licence, and that you understand the contribution and its record are public. There is no separate CLA to sign.
+
+Bots such as Dependabot are exempt, and merge commits are not checked, so a bot pull request does not fail for lacking a sign-off no human wrote.
 
 ## Tests for new functionality
 
