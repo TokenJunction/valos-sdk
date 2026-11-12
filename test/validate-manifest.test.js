@@ -1,4 +1,5 @@
-// Copyright (c) 2026 TokenJunction LLC. All rights reserved.
+// Copyright (c) 2026 TokenJunction LLC
+// SPDX-License-Identifier: Apache-2.0
 
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
@@ -26,7 +27,7 @@ function messages(result, path) {
 describe("connector manifest schema", () => {
   it("publishes a clone of the schema document", () => {
     const schema = connectorManifestSchema();
-    assert.equal(schema.$comment, "Copyright (c) 2026 TokenJunction LLC. All rights reserved.");
+    assert.equal(schema.$comment, "Copyright (c) 2026 TokenJunction LLC. SPDX-License-Identifier: Apache-2.0");
     assert.equal(schema.additionalProperties, false);
     assert.deepEqual(schema.required, [
       "schemaVersion",
