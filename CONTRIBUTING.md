@@ -69,7 +69,7 @@ Copyright (c) 2026 TokenJunction LLC
 SPDX-License-Identifier: MIT
 ```
 
-This project is licensed under the MIT License. Contributions are accepted under the same license (inbound = outbound), as described in [LICENSE](LICENSE). Keep the copyright notice on every source file and retain the `SPDX-License-Identifier: MIT` header wherever it is present.
+This project is licensed under the MIT License. Contributions are accepted under the same license (inbound = outbound), as described in [LICENSE](LICENSE). The copyright and permission notice is preserved in [NOTICE](NOTICE). Keep the copyright notice on every source file and retain the `SPDX-License-Identifier: MIT` header wherever it is present.
 
 Do not commit secrets, credentials, or sourcemaps. The build rejects `.map` files in the package tarball.
 

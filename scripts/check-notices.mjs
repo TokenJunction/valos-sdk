@@ -2,13 +2,14 @@
 // Copyright (c) 2026 TokenJunction LLC
 // SPDX-License-Identifier: MIT
 
-import { readFileSync, readdirSync, statSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 import process from "node:process";
 import { URL, fileURLToPath } from "node:url";
 
 const root = fileURLToPath(new URL("..", import.meta.url));
 const copyright = "Copyright (c) 2026 TokenJunction LLC";
+const expectedLicense = "MIT";
 const failures = [];
 
 function read(relativePath) {
@@ -54,9 +55,6 @@ requireText(
 const notice = read("NOTICE");
 requireText("NOTICE", notice, "valos-sdk", copyright, "MIT License", "LICENSE");
 
-const readme = read("README.md");
-requireText("README.md", readme, "[MIT License](LICENSE)");
-
 let pkg;
 try {
   pkg = JSON.parse(read("package.json"));
@@ -64,15 +62,32 @@ try {
   failures.push("package.json: invalid JSON");
 }
 if (pkg) {
-  if (pkg.license !== "MIT") failures.push('package.json: license must be "MIT"');
+  if (pkg.license !== expectedLicense) {
+    failures.push(`package.json: license must be "${expectedLicense}"`);
+  }
   if (pkg.private !== true) failures.push("package.json: package must remain private");
 }
 
 for (const filePath of javascriptFiles(join(root, "src"))) {
   const source = readFileSync(filePath, "utf8");
+  const relativePath = filePath.slice(root.length + 1);
   if (!source.includes(`// ${copyright}`)) {
-    failures.push(`${filePath.slice(root.length + 1)}: missing copyright header`);
+    failures.push(`${relativePath}: missing copyright header`);
   }
+  if (!source.includes(`// SPDX-License-Identifier: ${expectedLicense}`)) {
+    failures.push(`${relativePath}: SPDX header does not agree with package licence`);
+  }
+}
+
+const docs = ["README.md", "CONTRIBUTING.md"].filter((doc) =>
+  existsSync(join(root, doc)),
+);
+if (docs.length === 0) {
+  failures.push("project docs: README.md or CONTRIBUTING.md is required");
+}
+for (const doc of docs) {
+  const text = read(doc);
+  requireText(doc, text, "](LICENSE)", "](NOTICE)", expectedLicense);
 }
 
 if (failures.length > 0) {
@@ -80,5 +95,7 @@ if (failures.length > 0) {
   for (const failure of failures) process.stderr.write(`- ${failure}\n`);
   process.exitCode = 1;
 } else {
-  process.stdout.write("Licence and notice check passed: MIT licence, copyright headers and NOTICE are intact.\n");
+  process.stdout.write(
+    "Licence check passed: files exist, package/header/doc terms agree, and every project doc links LICENSE and NOTICE.\n",
+  );
 }
