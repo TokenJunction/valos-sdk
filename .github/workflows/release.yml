@@ -1,0 +1,90 @@
+# Copyright (c) 2026 TokenJunction LLC
+# SPDX-License-Identifier: Apache-2.0
+
+name: release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    name: build, sign and publish
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: write
+      id-token: write
+      attestations: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
+        with:
+          node-version-file: .nvmrc
+
+      - name: Verify the tag matches package.json
+        run: |
+          set -eu
+          tag="${GITHUB_REF_NAME#v}"
+          pkg="$(node -p "require('./package.json').version")"
+          if [ "$tag" != "$pkg" ]; then
+            echo "tag $GITHUB_REF_NAME does not match package.json version $pkg" >&2
+            exit 1
+          fi
+          echo "tag and package.json agree on $pkg"
+
+      - name: Install, lint and test
+        run: |
+          npm ci
+          npm run lint
+          npm test
+
+      - name: Reproducible build
+        run: npm run build
+        env:
+          SOURCE_DATE_EPOCH: "315532800"
+
+      - name: Pack the release tarball
+        run: |
+          set -eu
+          mkdir -p dist
+          npm pack --ignore-scripts --pack-destination dist
+          cd dist
+          sha256sum ./*.tgz > SHA256SUMS
+          cat SHA256SUMS
+
+      - name: Install cosign
+        uses: sigstore/cosign-installer@f713795cb21599bc4e5c4b58cbad1da852d7eeb9 # v3
+
+      - name: Sign the tarball keyless
+        run: |
+          set -eu
+          tgz="$(ls dist/*.tgz | head -n 1)"
+          cosign sign-blob --yes --bundle "${tgz}.bundle" "$tgz"
+          echo "signed $tgz"
+
+      - name: Generate SLSA provenance
+        uses: actions/attest-build-provenance@8beda2b7ed98355c0e97c0a63bec38ae472e66c4 # v4
+        with:
+          subject-path: "dist/*.tgz"
+
+      - name: Publish the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -eu
+          gh release create "$GITHUB_REF_NAME" \
+            --verify-tag \
+            --title "valos-sdk $GITHUB_REF_NAME" \
+            --generate-notes \
+            dist/*.tgz dist/SHA256SUMS dist/*.bundle
