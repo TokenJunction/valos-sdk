@@ -1,4 +1,5 @@
-// Copyright (c) 2026 TokenJunction LLC. All rights reserved.
+// Copyright (c) 2026 TokenJunction LLC
+// SPDX-License-Identifier: Apache-2.0
 
 import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
