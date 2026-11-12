@@ -1,10 +1,11 @@
-<!-- Copyright (c) 2026 TokenJunction LLC. All rights reserved. -->
+<!-- Copyright (c) 2026 TokenJunction LLC -->
+<!-- SPDX-License-Identifier: Apache-2.0 -->
 
 # valos-sdk
 
 Public connector SDK for ValhallaOS. It validates a connector manifest against [`schema/connector-manifest.schema.json`](schema/connector-manifest.schema.json). The manifest names the connector, its entry module, and an allowlist of operations (`read`, `write`, `subscribe`, `health`).
 
-This package is private (`"license": "UNLICENSED"`) and is not published to npm.
+Licensed under the [Apache License 2.0](LICENSE). The package is marked `"private": true`, so an accidental `npm publish` is still blocked.
 
 ## Requirements
 

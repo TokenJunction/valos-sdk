@@ -1,4 +1,5 @@
-<!-- Copyright (c) 2026 TokenJunction LLC. All rights reserved. -->
+<!-- Copyright (c) 2026 TokenJunction LLC -->
+<!-- SPDX-License-Identifier: Apache-2.0 -->
 
 # Contributing
 
@@ -27,9 +28,10 @@ JavaScript is written as ES modules. The enforced style is ESLint 10 with [`@esl
 Every source file starts with:
 
 ```
-Copyright (c) 2026 TokenJunction LLC. All rights reserved.
+Copyright (c) 2026 TokenJunction LLC
+SPDX-License-Identifier: Apache-2.0
 ```
 
-There is no open-source license yet. Do not add a license file. The package stays `"private": true` and `"license": "UNLICENSED"`.
+This project is licensed under the Apache License 2.0. Contributions are accepted under the same license (inbound = outbound), per section 5 of [LICENSE](LICENSE). Keep the `SPDX-License-Identifier: Apache-2.0` header on every source file.
 
 Do not commit secrets, credentials, or sourcemaps. The build rejects `.map` files in the package tarball.
