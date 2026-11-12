@@ -58,6 +58,14 @@ if (!result.ok) {
 
 `validateManifest` checks an already-parsed value. `connectorManifestSchema` returns a clone of the JSON schema. A manifest object has `schemaVersion` (`1`), `name`, `version` (`MAJOR.MINOR.PATCH`), `description`, `entry` (a relative `.js` or `.mjs` path), and `capabilities`.
 
+## Project documents
+
+- [GOVERNANCE.md](GOVERNANCE.md) — who decides, and how access survives an absence
+- [ROADMAP.md](ROADMAP.md) — what is planned, and what is explicitly not
+- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) — how the validator is built and why
+- [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) — expected behaviour and how to report a problem
+- [SECURITY.md](SECURITY.md) — how to report a vulnerability
+
 ## Feedback
 
 Bug reports and enhancement requests go to [GitHub issues](https://github.com/TokenJunction/valos-sdk/issues). Changes are proposed as pull requests. See [CONTRIBUTING.md](CONTRIBUTING.md).
