@@ -27,6 +27,16 @@ jobs:
           persist-credentials: false
           fetch-depth: 0
 
+      - name: Require a signed tag
+        run: |
+          set -eu
+          if ! git cat-file -p "${GITHUB_REF_NAME}" | grep -qE 'BEGIN (PGP|SSH) SIGNATURE'; then
+            echo "tag ${GITHUB_REF_NAME} is not signed: refusing to publish" >&2
+            echo "recreate it with: git tag -s ${GITHUB_REF_NAME} -m 'valos-sdk ${GITHUB_REF_NAME#v}'" >&2
+            exit 1
+          fi
+          echo "tag ${GITHUB_REF_NAME} is signed"
+
       - name: Setup Node
         uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
         with:
