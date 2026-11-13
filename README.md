@@ -1,10 +1,11 @@
-<!-- Copyright (c) 2026 TokenJunction LLC. All rights reserved. -->
+<!-- Copyright (c) 2026 TokenJunction LLC -->
+<!-- SPDX-License-Identifier: Apache-2.0 -->
 
 # valos-sdk
 
 Public connector SDK for ValhallaOS. It validates a connector manifest against [`schema/connector-manifest.schema.json`](schema/connector-manifest.schema.json). The manifest names the connector, its entry module, and an allowlist of operations (`read`, `write`, `subscribe`, `health`).
 
-This package is private (`"license": "UNLICENSED"`) and is not published to npm.
+Licensed under the [Apache License 2.0](LICENSE). The package is marked `"private": true`, so an accidental `npm publish` is still blocked.
 
 ## Requirements
 
@@ -56,6 +57,14 @@ if (!result.ok) {
 ```
 
 `validateManifest` checks an already-parsed value. `connectorManifestSchema` returns a clone of the JSON schema. A manifest object has `schemaVersion` (`1`), `name`, `version` (`MAJOR.MINOR.PATCH`), `description`, `entry` (a relative `.js` or `.mjs` path), and `capabilities`.
+
+## Project documents
+
+- [GOVERNANCE.md](GOVERNANCE.md) — who decides, and how access survives an absence
+- [ROADMAP.md](ROADMAP.md) — what is planned, and what is explicitly not
+- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) — how the validator is built and why
+- [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) — expected behaviour and how to report a problem
+- [SECURITY.md](SECURITY.md) — how to report a vulnerability
 
 ## Feedback
 

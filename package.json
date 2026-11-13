@@ -2,7 +2,7 @@
   "name": "valos-sdk",
   "version": "0.1.0",
   "private": true,
-  "license": "UNLICENSED",
+  "license": "Apache-2.0",
   "description": "Public Valos connector SDK for validating connector manifests.",
   "type": "module",
   "engines": {

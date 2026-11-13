@@ -1,4 +1,5 @@
-<!-- Copyright (c) 2026 TokenJunction LLC. All rights reserved. -->
+<!-- Copyright (c) 2026 TokenJunction LLC -->
+<!-- SPDX-License-Identifier: Apache-2.0 -->
 
 # Building
 
@@ -65,7 +66,7 @@ The two hashes match for the same Node.js version, npm version, and source tree.
 
 npm 10.9.9 writes the tarball with portable metadata: owner and group `0`, mode `0644`, and a fixed entry time of `1985-10-26T08:15:00.000Z` (`pacote`'s pack timestamp). It does not read `SOURCE_DATE_EPOCH` in this release. The variable is still set, which is the reproducible-builds convention, and both packs in one run share it. If a later npm release honors `SOURCE_DATE_EPOCH`, the two hashes still match because they use one value. The clock is not part of the archive, so packing again later yields the same SHA-256.
 
-The packed files are `package.json`, `README.md`, `src/`, and `schema/`. Tests and CI config stay in the repository and are not part of the tarball. No sourcemaps are generated or packed.
+The packed files are `package.json`, `README.md`, `LICENSE`, `src/`, and `schema/`. Tests and CI config stay in the repository and are not part of the tarball. No sourcemaps are generated or packed.
 
 ## Install and uninstall
 

@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/TokenJunction/valos-sdk/schema/connector-manifest.schema.json",
-  "$comment": "Copyright (c) 2026 TokenJunction LLC. All rights reserved.",
+  "$comment": "Copyright (c) 2026 TokenJunction LLC. SPDX-License-Identifier: Apache-2.0",
   "title": "Valos connector manifest",
   "description": "Public manifest for a Valos connector package. It names the connector, its entry module, and the operations it may perform. It does not carry credentials or network endpoints.",
   "type": "object",
