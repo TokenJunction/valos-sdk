@@ -1,4 +1,5 @@
-# Copyright (c) 2026 TokenJunction LLC. All rights reserved.
+# Copyright (c) 2026 TokenJunction LLC
+# SPDX-License-Identifier: MIT
 
 name: ci
 
@@ -48,6 +49,8 @@ jobs:
           node-version-file: .nvmrc
       - name: Install
         run: npm ci
+      - name: Verify licence and notices
+        run: npm run check:notices
       - name: Test with coverage
         run: npm test
 
