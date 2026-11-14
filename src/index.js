@@ -1,4 +1,5 @@
-// Copyright (c) 2026 TokenJunction LLC. All rights reserved.
+// Copyright (c) 2026 TokenJunction LLC
+// SPDX-License-Identifier: MIT
 
 export {
   connectorManifestSchema,

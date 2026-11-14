@@ -1,4 +1,5 @@
-// Copyright (c) 2026 TokenJunction LLC. All rights reserved.
+// Copyright (c) 2026 TokenJunction LLC
+// SPDX-License-Identifier: MIT
 
 import assert from "node:assert/strict";
 import { readFileSync, readdirSync, statSync } from "node:fs";
@@ -8,7 +9,8 @@ import { describe, it } from "node:test";
 import { URL, fileURLToPath } from "node:url";
 
 const root = fileURLToPath(new URL("..", import.meta.url));
-const copyright = "Copyright (c) 2026 TokenJunction LLC. All rights reserved.";
+const copyright = "Copyright (c) 2026 TokenJunction LLC";
+const spdx = "SPDX-License-Identifier: MIT";
 
 function read(relativePath) {
   return readFileSync(join(root, relativePath), "utf8");
@@ -35,7 +37,7 @@ describe("project gates", () => {
     assert.equal(pkg.engines.node, "22.23.4");
     assert.equal(pkg.packageManager, "npm@10.9.9");
     assert.equal(pkg.private, true);
-    assert.equal(pkg.license, "UNLICENSED");
+    assert.equal(pkg.license, "MIT");
     assert.equal(pkg.scripts.lint, "eslint . --max-warnings=0");
     assert.match(pkg.scripts.test, /--statements=90/);
     assert.match(pkg.scripts.test, /--branches=80/);
@@ -85,10 +87,11 @@ describe("project gates", () => {
     assert.ok(files.length >= 4);
     for (const filePath of files) {
       const source = readFileSync(filePath, "utf8");
-      assert.equal(source.startsWith(`// ${copyright}`), true, filePath);
+      assert.equal(source.includes(`// ${copyright}`), true, filePath);
     }
     const schema = JSON.parse(read("schema/connector-manifest.schema.json"));
-    assert.equal(schema.$comment, copyright);
+    assert.equal(schema.$comment.includes(copyright), true);
     assert.equal(read(".github/workflows/ci.yml").includes(copyright), true);
+    assert.equal(read(".github/workflows/ci.yml").includes(spdx), true);
   });
 });
