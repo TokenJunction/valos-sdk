@@ -2,7 +2,7 @@
   "name": "valos-sdk",
   "version": "0.1.0",
   "private": true,
-  "license": "UNLICENSED",
+  "license": "MIT",
   "description": "Public Valos connector SDK for validating connector manifests.",
   "type": "module",
   "engines": {
@@ -19,6 +19,7 @@
     "schema/"
   ],
   "scripts": {
+    "check:notices": "node scripts/check-notices.mjs",
     "test": "c8 --all --check-coverage --statements=90 --branches=80 --lines=80 --functions=80 --include=src/**/*.js --exclude=test/** --reporter=text --reporter=text-summary -- node --test",
     "lint": "eslint . --max-warnings=0",
     "build": "node scripts/reproducible-build.js"
