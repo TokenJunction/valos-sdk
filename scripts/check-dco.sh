@@ -35,12 +35,20 @@ for sha in $commits; do
   author_email="$(git show -s --format='%ae' "$sha" | tr 'A-Z' 'a-z')"
   committer_email="$(git show -s --format='%ce' "$sha" | tr 'A-Z' 'a-z')"
 
-  case "$author_name$author_email" in
-    *"[bot]"*|*bot@users.noreply.github.com*|*dependabot*)
-      echo "skip (bot)  ${sha:0:8} ${author_name}"
-      continue
+  is_bot=0
+  case "$author_name" in
+    "dependabot[bot]"|"github-actions[bot]") is_bot=1 ;;
+  esac
+  case "$author_email" in
+    "dependabot@users.noreply.github.com"|"49699333+dependabot[bot]@users.noreply.github.com"|\
+    "github-actions[bot]@users.noreply.github.com"|"41898282+github-actions[bot]@users.noreply.github.com")
+      is_bot=1
       ;;
   esac
+  if [ "$is_bot" -eq 1 ]; then
+    echo "skip (bot)  ${sha:0:8} ${author_name}"
+    continue
+  fi
 
   checked=$((checked + 1))
   message="$(git show -s --format='%B' "$sha")"

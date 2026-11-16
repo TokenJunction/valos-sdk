@@ -34,11 +34,19 @@ git rebase --signoff main
 git push --force-with-lease
 ```
 
-To stop having to remember, sign everything in this repository automatically:
+<!-- coderabbit-ai-generated:v1 -->
+
+<!-- coderabbit-ai-generated-section:v1:811010e5ad8a518cb7a734ad56f2fd4a361c4745d90a03e930bb3d7ac6b36ea7 -->
+
+Use `-s` for each new commit to add the required sign-off:
 
 ```bash
-git config --local format.signoff true
+git commit -s
 ```
+
+`git config --local format.signoff true` affects `git format-patch`; it does not automatically add sign-offs to ordinary commits.
+
+<!-- /coderabbit-ai-generated:v1 -->
 
 The trailer takes the form:
 
