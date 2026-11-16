@@ -1,4 +1,5 @@
-<!-- Copyright (c) 2026 TokenJunction LLC. All rights reserved. -->
+<!-- Copyright (c) 2026 TokenJunction LLC -->
+<!-- SPDX-License-Identifier: MIT -->
 # SDK quickstart
 
 This repository provides local connector-manifest validation. It does not execute connectors, authenticate users, make AI requests, or handle payments. It is not published to npm.
@@ -43,4 +44,4 @@ npm exec --yes --package=typescript@5.9.3 -- tsc --strict --noEmit --module Node
 
 This command downloads the exact compiler version through npm; it is not yet part of the repository lockfile. The typecheck workflow runs against the pull-request merge checkout.
 
-No license grant is added by this change. The existing UNLICENSED status remains an unresolved OpenSSF eligibility gate. No secrets or wallet data are needed for these examples.
+This package is released under the MIT License; see `LICENSE` and `NOTICE`. It remains private and is not published to npm. No secrets or wallet data are needed for these examples.
